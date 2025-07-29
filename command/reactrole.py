@@ -1,5 +1,4 @@
 import discord
-from discord import app_commands
 from discord.ext import commands
 
 class ReactRole(commands.Cog):
@@ -7,20 +6,16 @@ class ReactRole(commands.Cog):
         self.bot = bot
         self.role_message_map = {}
 
-    @app_commands.command(name="reactrole", description="Buat react role dengan emoji bebas")
-    @app_commands.describe(
-        channel="Channel tempat pesan dikirim",
-        message="Pesan yang ingin ditampilkan",
-        emoji="Emoji yang digunakan untuk memberi role",
-        role="Role yang diberikan jika user mereaksi dengan emoji"
-    )
+    @commands.command(name="reactrole")
+    @commands.has_permissions(manage_roles=True)
     async def reactrole(
         self,
-        interaction: discord.Interaction,
+        ctx,
         channel: discord.TextChannel,
-        message: str,
         emoji: str,
-        role: discord.Role
+        role: discord.Role,
+        *,
+        message: str
     ):
         embed = discord.Embed(
             title=message,
@@ -30,12 +25,12 @@ class ReactRole(commands.Cog):
         await msg.add_reaction(emoji)
 
         self.role_message_map[msg.id] = {emoji: role}
-        await interaction.response.send_message(f"✅ Pesan react role dikirim ke {channel.mention}.", ephemeral=True)
+        await ctx.reply(f"✅ Pesan react role dikirim ke {channel.mention}.", mention_author=False)
 
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload: discord.RawReactionActionEvent):
         if payload.user_id == self.bot.user.id:
-            return 
+            return
 
         if payload.message_id in self.role_message_map:
             guild = self.bot.get_guild(payload.guild_id)

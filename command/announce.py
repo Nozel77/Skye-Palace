@@ -1,22 +1,19 @@
 import discord
-from discord import app_commands
 from discord.ext import commands
 
 class AnnounceCommand(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="announce", description="Kirim pengumuman ke channel tertentu")
-    @app_commands.describe(
-        channel="Channel tujuan pengumuman",
-        message="Isi dari pengumuman"
-    )
-    async def announce(self, interaction: discord.Interaction, channel: discord.TextChannel, message: str):
+    @commands.command(name="announce")
+    @commands.has_permissions(administrator=True)
+    async def text_announce(self, ctx, channel: discord.TextChannel, *, message: str = ""):
         try:
-            await channel.send(message)
-            await interaction.response.send_message(f"✅ Pengumuman berhasil dikirim ke {channel.mention}", ephemeral=True)
+            files = [await attachment.to_file() for attachment in ctx.message.attachments] if ctx.message.attachments else None
+            await channel.send(content=message or None, files=files)
+            await ctx.reply(f"✅ Pengumuman berhasil dikirim ke {channel.mention}", mention_author=False)
         except Exception as e:
-            await interaction.response.send_message(f"❌ Gagal mengirim: {str(e)}", ephemeral=True)
+            await ctx.reply(f"❌ Gagal mengirim: {e}", mention_author=False)
 
 async def setup(bot):
     await bot.add_cog(AnnounceCommand(bot))
