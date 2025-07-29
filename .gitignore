@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv/
+
+# VS Code
+.vscode/
+
+# IDE
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Bytecode
+*.pyc
+*.pyo
+*.pyd
+
+# macOS / Windows / Linux system files
+.DS_Store
+Thumbs.db
+
+# Environment variables or secrets
+.env
+
+# Log files
+*.log
