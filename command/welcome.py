@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-from config.setting import channelId
+from config.setting import channelId, take_role_channel, open_ticket_channel, help_channel
 
 class Welcome(commands.Cog):
     def __init__(self, bot):
@@ -12,17 +12,16 @@ class Welcome(commands.Cog):
         channel = self.bot.get_channel(self.welcome_channel_id)
         if channel is None:
             return
-
-        await channel.send(f"Holaaa, {member.mention}!")
-
+        
         embed = discord.Embed(
-            title="🪩 WELCOME TO SKYE PALACE! 🪩",
+            title="SELAMAT DATANG DI SKYE PALACE! 🪩",
             description=(
-                "• REACT DI `#⁠👉┋𝑻𝑨𝑲𝑬-𝑹𝑶𝑳𝑬` UNTUK MENGAMBIL ROLE\n"
-                "• VVIP, ROYAL, DAN TEXT DI SCREEN SILAHKAN OPEN TICKET DI `#🎟️┋𝑶𝑷𝑬𝑵-𝑻𝑰𝑪𝑲𝑬𝑻`\n"
-                "• UNTUK BANTUAN CHAT DI `#🚩┋𝑯𝑬𝑳𝑷`"
+                f"Holaaa, {member.mention}!\n\n"
+                f"• REACT DI <#{take_role_channel}> UNTUK MENGAMBIL ROLE\n"
+                f"• VVIP, ROYAL, DAN TEXT DI SCREEN SILAHKAN OPEN TICKET DI <#{open_ticket_channel}> \n"
+                f"• UNTUK BANTUAN CHAT DI <#{help_channel}>\n\n"
+                "Enjoy the party and have fun! 🪩"
             ),
-            color=discord.Color.blue()
         )
 
         file = discord.File("assets/welcome.png", filename="welcome.png")
