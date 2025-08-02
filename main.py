@@ -1,7 +1,7 @@
 import asyncio
 from config.setting import discordToken
 from util.bot import bot
-from command import announce, reactrole 
+from command import announce, reactrole, welcome 
 
 @bot.event
 async def on_ready():
@@ -14,6 +14,7 @@ async def on_ready():
 async def main():
     await announce.setup(bot)
     await reactrole.setup(bot)
+    await welcome.setup(bot)
     await bot.start(discordToken)
 
 if __name__ == "__main__":
