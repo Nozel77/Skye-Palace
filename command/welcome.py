@@ -16,7 +16,6 @@ class Welcome(commands.Cog):
         embed = discord.Embed(
             title="SELAMAT DATANG DI SKYE PALACE! 🪩",
             description=(
-                f"Holaaa, {member.mention}!\n\n"
                 f"• REACT DI <#{take_role_channel}> UNTUK MENGAMBIL ROLE\n"
                 f"• VVIP, ROYAL, DAN TEXT DI SCREEN SILAHKAN OPEN TICKET DI <#{open_ticket_channel}> \n"
                 f"• UNTUK BANTUAN CHAT DI <#{help_channel}>\n\n"
@@ -27,7 +26,11 @@ class Welcome(commands.Cog):
         file = discord.File("assets/welcome.png", filename="welcome.png")
         embed.set_image(url="attachment://welcome.png")
 
-        await channel.send(file=file, embed=embed)
+        await channel.send(
+            content=f"Holaaa, {member.mention}!",
+            file=file,
+            embed=embed
+        )
 
 async def setup(bot):
     await bot.add_cog(Welcome(bot))
